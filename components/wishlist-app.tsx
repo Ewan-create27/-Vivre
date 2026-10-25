@@ -383,7 +383,7 @@ export default function WishlistApp() {
         onLogout={logout}
         onNotify={notify}
         onInstallApp={installApplication}
-        showInstallApp={!isInstalled}
+        isInstalled={isInstalled}
       />
     );
   }
@@ -1065,7 +1065,7 @@ function ProfilePage({
   onLogout,
   onNotify,
   onInstallApp,
-  showInstallApp,
+  isInstalled,
 }: {
   profile: Profile;
   wishes: Wish[];
@@ -1075,7 +1075,7 @@ function ProfilePage({
   onLogout: () => Promise<void>;
   onNotify: (message: string) => void;
   onInstallApp: () => Promise<void>;
-  showInstallApp: boolean;
+  isInstalled: boolean;
 }) {
   const [draft, setDraft] = useState({
     displayName: profile.displayName,
@@ -1230,11 +1230,9 @@ function ProfilePage({
         </section>
 
         <button type="button" className="logout-button" onClick={() => void onLogout()}><LogOut size={17} /> Se déconnecter</button>
-        {showInstallApp && (
-          <button type="button" className="install-app-button" onClick={() => void onInstallApp()}>
-            <Download size={17} /> Télécharger l’application
-          </button>
-        )}
+        <button type="button" className="install-app-button" onClick={() => void onInstallApp()}>
+          <Download size={17} /> {isInstalled ? "Application installée" : "Télécharger l’application"}
+        </button>
       </section>
       {selectedWeek && <WeekRecap week={selectedWeek} onClose={() => setSelectedWeek(null)} onOpenWish={onOpenWish} />}
     </main>
